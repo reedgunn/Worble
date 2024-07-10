@@ -17,7 +17,7 @@ public class Scene0 : MonoBehaviour {
         RectTransform rectTransform_title = title.GetComponent<RectTransform>();
         rectTransform_title.anchoredPosition = new Vector2(0, 575);
         rectTransform_title.sizeDelta = new Vector2(1550, 200);
-        title_text.text = "WORDLE 2-15";
+        title_text.text = "Worble";
         title_text.color = Color.black;
         title_text.fontSize = 200;
         title_text.fontStyle = FontStyles.Bold;
