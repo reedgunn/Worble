@@ -26,7 +26,7 @@ public class Scene1 : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-
+        // Create 'Restart with new word' button:
         GameObject restartButton = new GameObject("RestartButton");
         restartButton.transform.SetParent(GameObject.Find("Canvas").transform);
         RectTransform rectTransform_restartButton = restartButton.AddComponent<RectTransform>();
@@ -48,7 +48,7 @@ public class Scene1 : MonoBehaviour {
         restartButton_text_text.fontStyle = FontStyles.Bold;
         restartButton_text_text.alignment = TextAlignmentOptions.Center;
         restartButton_button.onClick.AddListener(() => restartButtonClicked());
-
+        // Create 'Go back to main menu' button:
         GameObject gbtmmButton = new GameObject("gbtmmButton");
         gbtmmButton.transform.SetParent(GameObject.Find("Canvas").transform);
         RectTransform rectTransform_gbtmmButton = gbtmmButton.AddComponent<RectTransform>();
@@ -70,13 +70,13 @@ public class Scene1 : MonoBehaviour {
         gbtmmButton_text_text.fontStyle = FontStyles.Bold;
         gbtmmButton_text_text.alignment = TextAlignmentOptions.Center;
         gbtmmButton_button.onClick.AddListener(() => gbtmmButtonClicked());
-
         stopUserInput = false;
         numCols = Scene0.numCols;
         words = new HashSet<string>(dictionary.text.Split("\n"));
         words.RemoveWhere(isWrongLength);
         List<string> wordsAsList = new List<string>(words);
         curAnswer = wordsAsList[UnityEngine.Random.Range(0, wordsAsList.Count)];
+        // Initialize message box:
         GameObject message = new GameObject("message");
         message.transform.SetParent(GameObject.Find("Canvas").transform);
         TextMeshProUGUI message_text = message.AddComponent<TextMeshProUGUI>();
@@ -92,7 +92,6 @@ public class Scene1 : MonoBehaviour {
         RectTransform rectTransform_messageBox = messageBox.AddComponent<RectTransform>();
         rectTransform_messageBox.anchoredPosition = new Vector3(0, 725, -1);
         LineRenderer lineRenderer_messageBox = messageBox.AddComponent<LineRenderer>();
-        lineRenderer_messageBox.sortingOrder = 1;
         lineRenderer_messageBox.useWorldSpace = false;
         lineRenderer_messageBox.positionCount = 2;
         Vector3[] positions_messageBox = {new Vector2(0, -15), new Vector2(0, 65)};
@@ -198,9 +197,6 @@ public class Scene1 : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Input.GetKeyDown("escape")) {
-            Application.Quit();
-        }
         foreach (char c in "qwertyuiopasdfghjklzxcvbnm") {
             if (Input.GetKeyDown(c.ToString()) && (curCol < numCols - 1 || (curCol == numCols - 1 && GameObject.Find("Letter(" + curRow.ToString() + ", " + (numCols - 1).ToString() + ")").GetComponent<TextMeshProUGUI>().text == "")) && stopUserInput == false) {
                 GameObject.Find("Letter(" + curRow.ToString() + ", " + curCol.ToString() + ")").GetComponent<TextMeshProUGUI>().text = c.ToString().ToUpper();
