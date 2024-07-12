@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
@@ -25,6 +26,51 @@ public class Scene1 : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
+
+        GameObject restartButton = new GameObject("RestartButton");
+        restartButton.transform.SetParent(GameObject.Find("Canvas").transform);
+        RectTransform rectTransform_restartButton = restartButton.AddComponent<RectTransform>();
+        rectTransform_restartButton.anchoredPosition = new Vector2(990, -665);
+        rectTransform_restartButton.sizeDelta = new Vector2(550, 75);
+        Button restartButton_button = restartButton.AddComponent<Button>();
+        Image restartButton_image = restartButton.AddComponent<Image>();
+        restartButton_image.color = Color.black;
+        restartButton_button.targetGraphic = restartButton_image;
+        GameObject restartButton_text = new GameObject("RestartButtonText");
+        restartButton_text.transform.SetParent(GameObject.Find("RestartButton").transform);
+        TextMeshProUGUI restartButton_text_text = restartButton_text.AddComponent<TextMeshProUGUI>();
+        RectTransform rectTransform_restartButton_text_text = restartButton_text_text.GetComponent<RectTransform>();
+        rectTransform_restartButton_text_text.anchoredPosition = new Vector2(0, 0);
+        rectTransform_restartButton_text_text.sizeDelta = new Vector2(550, 75);
+        restartButton_text_text.text = "Restart with new word";
+        restartButton_text_text.color = Color.white;
+        restartButton_text_text.fontSize = 45;
+        restartButton_text_text.fontStyle = FontStyles.Bold;
+        restartButton_text_text.alignment = TextAlignmentOptions.Center;
+        restartButton_button.onClick.AddListener(() => restartButtonClicked());
+
+        GameObject gbtmmButton = new GameObject("gbtmmButton");
+        gbtmmButton.transform.SetParent(GameObject.Find("Canvas").transform);
+        RectTransform rectTransform_gbtmmButton = gbtmmButton.AddComponent<RectTransform>();
+        rectTransform_gbtmmButton.anchoredPosition = new Vector2(990, -750);
+        rectTransform_gbtmmButton.sizeDelta = new Vector2(560, 75);
+        Button gbtmmButton_button = gbtmmButton.AddComponent<Button>();
+        Image gbtmmButton_image = gbtmmButton.AddComponent<Image>();
+        gbtmmButton_image.color = Color.black;
+        gbtmmButton_button.targetGraphic = gbtmmButton_image;
+        GameObject gbtmmButton_text = new GameObject("gbtmmButtonText");
+        gbtmmButton_text.transform.SetParent(GameObject.Find("gbtmmButton").transform);
+        TextMeshProUGUI gbtmmButton_text_text = gbtmmButton_text.AddComponent<TextMeshProUGUI>();
+        RectTransform rectTransform_gbtmmButton_text_text = gbtmmButton_text_text.GetComponent<RectTransform>();
+        rectTransform_gbtmmButton_text_text.anchoredPosition = new Vector2(0, 0);
+        rectTransform_gbtmmButton_text_text.sizeDelta = new Vector2(560, 75);
+        gbtmmButton_text_text.text = "Go back to main menu";
+        gbtmmButton_text_text.color = Color.white;
+        gbtmmButton_text_text.fontSize = 45;
+        gbtmmButton_text_text.fontStyle = FontStyles.Bold;
+        gbtmmButton_text_text.alignment = TextAlignmentOptions.Center;
+        gbtmmButton_button.onClick.AddListener(() => gbtmmButtonClicked());
+
         stopUserInput = false;
         numCols = Scene0.numCols;
         words = new HashSet<string>(dictionary.text.Split("\n"));
@@ -204,11 +250,10 @@ public class Scene1 : MonoBehaviour {
                     }
                     if (submissionAttempt == curAnswer) {
                         stopUserInput = true;
-                        GameObject.Find("message").GetComponent<TextMeshProUGUI>().text = "GREAT!";
+                        GameObject.Find("message").GetComponent<TextMeshProUGUI>().text = "Great!";
                         GameObject.Find("message").GetComponent<TextMeshProUGUI>().enabled = true;
-                        GameObject.Find("message_box").GetComponent<LineRenderer>().startWidth = 190;
+                        GameObject.Find("message_box").GetComponent<LineRenderer>().startWidth = 165;
                         GameObject.Find("message_box").GetComponent<LineRenderer>().enabled = true;
-                        Invoke("backToMainMenu", 2);
                     }
                     else if (curRow == numRows - 1) {
                         stopUserInput = true;
@@ -216,7 +261,6 @@ public class Scene1 : MonoBehaviour {
                         GameObject.Find("message").GetComponent<TextMeshProUGUI>().enabled = true;
                         GameObject.Find("message_box").GetComponent<LineRenderer>().startWidth = 355 + 28f*numCols;
                         GameObject.Find("message_box").GetComponent<LineRenderer>().enabled = true;
-                        Invoke("backToMainMenu", 3);
                     }
                     else {
                         curCol = 0;
@@ -246,12 +290,16 @@ public class Scene1 : MonoBehaviour {
         GameObject.Find("message_box").GetComponent<LineRenderer>().enabled = false;
     }
 
-    void backToMainMenu() {
-        SceneManager.LoadScene(0);
-    }
-
     bool isWrongLength(string word) {
         return word.Length != numCols;
+    }
+
+    void restartButtonClicked() {
+        SceneManager.LoadScene(1);
+    }
+
+    void gbtmmButtonClicked() {
+        SceneManager.LoadScene(0);
     }
 
 }
