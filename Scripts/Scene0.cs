@@ -28,10 +28,10 @@ public class Scene0 : MonoBehaviour {
         TextMeshProUGUI instructions_text = instructions.AddComponent<TextMeshProUGUI>();
         RectTransform rectTransform_instructions = instructions.GetComponent<RectTransform>();
         rectTransform_instructions.anchoredPosition = new Vector2(0, 370);
-        rectTransform_instructions.sizeDelta = new Vector2(1000, 50);
+        rectTransform_instructions.sizeDelta = new Vector2(1100, 50);
         instructions_text.text = "Select the length of the word to guess:";
         instructions_text.color = Color.black;
-        instructions_text.fontSize = 50;
+        instructions_text.fontSize = 55;
         instructions_text.fontStyle = FontStyles.Bold;
         instructions_text.alignment = TextAlignmentOptions.Center;
         // Create buttons:
