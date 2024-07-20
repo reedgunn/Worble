@@ -15,7 +15,7 @@ public class Scene0 : MonoBehaviour {
         title.transform.SetParent(GameObject.Find("Canvas").transform);
         TextMeshProUGUI title_text = title.AddComponent<TextMeshProUGUI>();
         RectTransform rectTransform_title = title.GetComponent<RectTransform>();
-        rectTransform_title.anchoredPosition = new Vector2(0, 575);
+        rectTransform_title.anchoredPosition = new Vector2(0, 525);
         rectTransform_title.sizeDelta = new Vector2(1550, 200);
         title_text.text = "Worble";
         title_text.color = Color.black;
@@ -27,7 +27,7 @@ public class Scene0 : MonoBehaviour {
         instructions.transform.SetParent(GameObject.Find("Canvas").transform);
         TextMeshProUGUI instructions_text = instructions.AddComponent<TextMeshProUGUI>();
         RectTransform rectTransform_instructions = instructions.GetComponent<RectTransform>();
-        rectTransform_instructions.anchoredPosition = new Vector2(0, 370);
+        rectTransform_instructions.anchoredPosition = new Vector2(0, 315);
         rectTransform_instructions.sizeDelta = new Vector2(1100, 50);
         instructions_text.text = "Select the length of the word to guess:";
         instructions_text.color = Color.black;
@@ -36,13 +36,13 @@ public class Scene0 : MonoBehaviour {
         instructions_text.alignment = TextAlignmentOptions.Center;
         // Create buttons:
         int button_index = 2;
-        for (int i = -370; i <= 370; i += 740) {
-            for (int j = 250; j >= -600; j -= 130) {
+        for (int i = -285; i <= 285; i += 285*2) {
+            for (int j = 200; j >= -650; j -= 130) {
                 GameObject button = new GameObject("Button " + button_index);
                 button.transform.SetParent(GameObject.Find("Canvas").transform);
                 RectTransform rectTransform_button = button.AddComponent<RectTransform>();
                 rectTransform_button.anchoredPosition = new Vector2(i, j);
-                rectTransform_button.sizeDelta = new Vector2(650, 110);
+                rectTransform_button.sizeDelta = new Vector2(515, 90);
                 Button button_button = button.AddComponent<Button>();
                 Image button_image = button.AddComponent<Image>();
                 button_image.color = new Color32(107, 170, 100, 255);
@@ -54,12 +54,15 @@ public class Scene0 : MonoBehaviour {
                 rectTransform_text.anchoredPosition = new Vector2(0, 0);
                 button_text_text.text = button_index.ToString();
                 button_text_text.color = Color.black;
-                button_text_text.fontSize = 90;
+                button_text_text.fontSize = 85;
                 button_text_text.fontStyle = FontStyles.Bold;
                 button_text_text.alignment = TextAlignmentOptions.Center;
                 int local_buttonIndex = button_index;
                 button_button.onClick.AddListener(() => buttonClicked(local_buttonIndex));
                 button_index++;
+                Outline buttonOutline = button.AddComponent<Outline>();
+                buttonOutline.effectColor = Color.black;
+                buttonOutline.effectDistance = new Vector2(10, 10);
             }
         }
     }

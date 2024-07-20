@@ -24,20 +24,12 @@ public class Scene1 : MonoBehaviour {
     public string curAnswer;
     public bool gameOver;
     public TextAsset dictionary;
-    public Dictionary<char, int> answerLettersCount;
+    public Dictionary<string, int> answerLettersCount;
+    
 
     // Start is called before the first frame update
     void Start() {
-        Color32 darkGray_ = new Color32(120, 124, 126, 255);
-        // Create an invisible unfocus button
-        GameObject unfocusButton = new GameObject("UnfocusButton");
-        unfocusButton.transform.SetParent(GameObject.Find("Canvas").transform);
-        RectTransform rectTransform_unfocusButton = unfocusButton.AddComponent<RectTransform>();
-        rectTransform_unfocusButton.sizeDelta = new Vector2(1, 1);
-        Button unfocusButton_button = unfocusButton.AddComponent<Button>();
-        Image unfocusButton_image = unfocusButton.AddComponent<Image>();
-        unfocusButton_image.color = new Color(0, 0, 0, 0);
-        unfocusButton_button.targetGraphic = unfocusButton_image;
+        Color32 lightGray_ = new Color32(212, 214, 218, 255);
         // Create 'View answer' button:
         GameObject viewAnswerButton = new GameObject("viewAnswerButton");
         viewAnswerButton.transform.SetParent(GameObject.Find("Canvas").transform);
@@ -46,7 +38,7 @@ public class Scene1 : MonoBehaviour {
         rectTransform_viewAnswerButton.sizeDelta = new Vector2(325, 75);
         Button viewAnswerButton_button = viewAnswerButton.AddComponent<Button>();
         Image viewAnswerButton_image = viewAnswerButton.AddComponent<Image>();
-        viewAnswerButton_image.color = darkGray_;
+        viewAnswerButton_image.color = lightGray_;
         viewAnswerButton_button.targetGraphic = viewAnswerButton_image;
         GameObject viewAnswerButton_text = new GameObject("viewAnswerButtonText");
         viewAnswerButton_text.transform.SetParent(GameObject.Find("viewAnswerButton").transform);
@@ -68,7 +60,7 @@ public class Scene1 : MonoBehaviour {
         rectTransform_restartButton.sizeDelta = new Vector2(550, 75);
         Button restartButton_button = restartButton.AddComponent<Button>();
         Image restartButton_image = restartButton.AddComponent<Image>();
-        restartButton_image.color = darkGray_;
+        restartButton_image.color = lightGray_;
         restartButton_button.targetGraphic = restartButton_image;
         GameObject restartButton_text = new GameObject("RestartButtonText");
         restartButton_text.transform.SetParent(GameObject.Find("RestartButton").transform);
@@ -90,7 +82,7 @@ public class Scene1 : MonoBehaviour {
         rectTransform_gbtmmButton.sizeDelta = new Vector2(560, 75);
         Button gbtmmButton_button = gbtmmButton.AddComponent<Button>();
         Image gbtmmButton_image = gbtmmButton.AddComponent<Image>();
-        gbtmmButton_image.color = darkGray_;
+        gbtmmButton_image.color = lightGray_;
         gbtmmButton_button.targetGraphic = gbtmmButton_image;
         GameObject gbtmmButton_text = new GameObject("gbtmmButtonText");
         gbtmmButton_text.transform.SetParent(GameObject.Find("gbtmmButton").transform);
@@ -111,12 +103,12 @@ public class Scene1 : MonoBehaviour {
         words.RemoveWhere(isWrongLength);
         List<string> wordsAsList = new List<string>(words);
         curAnswer = wordsAsList[UnityEngine.Random.Range(0, wordsAsList.Count)];
-        answerLettersCount = new Dictionary<char, int>();
+        answerLettersCount = new Dictionary<string, int>();
         foreach (char l in curAnswer) {
-            if (answerLettersCount.ContainsKey(l)) {
-                answerLettersCount[l]++;
+            if (answerLettersCount.ContainsKey(l.ToString())) {
+                answerLettersCount[l.ToString()]++;
             } else {
-                answerLettersCount.Add(l, 1);
+                answerLettersCount.Add(l.ToString(), 1);
             }
         }
         // Initialize message box:
@@ -127,7 +119,7 @@ public class Scene1 : MonoBehaviour {
         rectTransform_message.anchoredPosition = new Vector3(0, 750, -1);
         rectTransform_message.sizeDelta = new Vector2(1500, 200);
         message_text.text = "";
-        message_text.color = Color.white;
+        message_text.color = Color.black;
         message_text.fontSize = 40;
         message_text.alignment = TextAlignmentOptions.Center;
         message_text.enabled = false;
@@ -140,7 +132,7 @@ public class Scene1 : MonoBehaviour {
         lineRenderer_messageBox.positionCount = 2;
         Vector3[] positions_messageBox = {new Vector2(0, -15), new Vector2(0, 65)};
         lineRenderer_messageBox.SetPositions(positions_messageBox);
-        lineRenderer_messageBox.material = black;
+        lineRenderer_messageBox.material = darkGray;
         lineRenderer_messageBox.enabled = false;
         curRow = 0;
         curCol = 0;
@@ -238,23 +230,23 @@ public class Scene1 : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        foreach (char c in "qwertyuiopasdfghjklzxcvbnm") {
-            if (Input.GetKeyDown(c.ToString()) && (curCol < numCols - 1 || (curCol == numCols - 1 && GameObject.Find("Letter(" + curRow.ToString() + ", " + (numCols - 1).ToString() + ")").GetComponent<TextMeshProUGUI>().text == ""))) {
-                GameObject.Find("Letter(" + curRow.ToString() + ", " + curCol.ToString() + ")").GetComponent<TextMeshProUGUI>().text = c.ToString().ToUpper();
+        foreach (string s in new List<string>{"q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m"}) {
+            if (Input.GetKeyDown(s) && (curCol < numCols - 1 || (curCol == numCols - 1 && GameObject.Find("Letter(" + curRow.ToString() + ", " + (numCols - 1).ToString() + ")").GetComponent<TextMeshProUGUI>().text == ""))) {
+                GameObject.Find("Letter(" + curRow.ToString() + ", " + curCol.ToString() + ")").GetComponent<TextMeshProUGUI>().text = s.ToUpper();
                 GameObject.Find("SquareOutline(" + curRow.ToString() + ", " + curCol.ToString() + ")").GetComponent<LineRenderer>().material = mediumGray;
                 if (curCol < numCols - 1) {
                     curCol++;
                 }
             }
         }
-        if (Input.GetKeyDown("backspace") && gameOver == false) {
+        if (Input.GetKeyDown("backspace") && !gameOver) {
             if (curCol > 0 && (curCol != numCols - 1 || GameObject.Find("Letter(" + curRow.ToString() + ", " + (numCols - 1).ToString() + ")").GetComponent<TextMeshProUGUI>().text == "")) {
                 curCol--;
             }
             GameObject.Find("Letter(" + curRow.ToString() + ", " + curCol.ToString() + ")").GetComponent<TextMeshProUGUI>().text = "";
             GameObject.Find("SquareOutline(" + curRow.ToString() + ", " + curCol.ToString() + ")").GetComponent<LineRenderer>().material = lightGray;
         }
-        if (Input.GetKeyDown("return") && gameOver == false) {
+        if (Input.GetKeyDown("return") && !gameOver) {
             if (GameObject.Find("Letter(" + curRow.ToString() + ", " + (numCols - 1).ToString() + ")").GetComponent<TextMeshProUGUI>().text != "") {
                 string submissionAttempt = "";
                 for (int i = 0; i <= numCols - 1; i++) {
@@ -265,38 +257,47 @@ public class Scene1 : MonoBehaviour {
                         GameObject.Find("Letter(" + curRow.ToString() + ", " + i.ToString() + ")").GetComponent<TextMeshProUGUI>().color = Color.white;
                         GameObject.Find("LetterButtonText(" + submissionAttempt[i] + ")").GetComponent<TextMeshProUGUI>().color = Color.white;
                     }
-                    Dictionary<char, int> curAnswerLettersCount = new Dictionary<char, int>(answerLettersCount);
+                    Dictionary<string, int> curAnswerLettersCount = new Dictionary<string, int>(answerLettersCount);
                     for (int i = 0; i <= numCols - 1; i++) {
                         if (submissionAttempt[i] == curAnswer[i]) {
-                            curAnswerLettersCount[submissionAttempt[i]]--;
+                            curAnswerLettersCount[submissionAttempt[i].ToString()]--;
                             GameObject.Find("SquareInside(" + curRow.ToString() + ", " + i.ToString() + ")").GetComponent<LineRenderer>().material = green;
                             GameObject.Find("SquareOutline(" + curRow.ToString() + ", " + i.ToString() + ")").GetComponent<LineRenderer>().material = green;
                             GameObject.Find("LetterButtonRectangle(" + submissionAttempt[i] + ")").GetComponent<LineRenderer>().material = green;
                         }
                     }
                     if (submissionAttempt == curAnswer) {
-                        GameObject.Find("message_box").GetComponent<LineRenderer>().startWidth = 165;
-                        GameObject.Find("message").GetComponent<TextMeshProUGUI>().text = "Great!";
-                        GameObject.Find("message_box").GetComponent<LineRenderer>().enabled = true;
-                        GameObject.Find("message").GetComponent<TextMeshProUGUI>().enabled = true;
+                        if (!isAnswerRevealed()) {
+                            GameObject.Find("message_box").GetComponent<LineRenderer>().startWidth = 165;
+                            GameObject.Find("message").GetComponent<TextMeshProUGUI>().text = "Great!";
+                            GameObject.Find("message_box").GetComponent<LineRenderer>().enabled = true;
+                            GameObject.Find("message").GetComponent<TextMeshProUGUI>().enabled = true;
+                        }
                         gameOver = true;
                     } else {
                         for (int i = 0; i <= numCols - 1; i++) {
-                            if (submissionAttempt[i] != curAnswer[i]) {
-                                if (curAnswerLettersCount.ContainsKey(submissionAttempt[i]) && curAnswerLettersCount[submissionAttempt[i]] > 0) {
-                                    curAnswerLettersCount[submissionAttempt[i]]--;
+                            string curLetterGuess = submissionAttempt[i].ToString();
+                            string curLetterGuessButtonRectangleMaterialName = GameObject.Find("LetterButtonRectangle(" + curLetterGuess + ")").GetComponent<LineRenderer>().material.name;
+                            if (curLetterGuess != curAnswer[i].ToString()) {
+                                if (curAnswerLettersCount.ContainsKey(curLetterGuess) && curAnswerLettersCount[curLetterGuess] > 0) {
+                                    curAnswerLettersCount[curLetterGuess]--;
                                     GameObject.Find("SquareInside(" + curRow.ToString() + ", " + i.ToString() + ")").GetComponent<LineRenderer>().material = yellow;
                                     GameObject.Find("SquareOutline(" + curRow.ToString() + ", " + i.ToString() + ")").GetComponent<LineRenderer>().material = yellow;
-                                    GameObject.Find("LetterButtonRectangle(" + submissionAttempt[i] + ")").GetComponent<LineRenderer>().material = yellow;
+                                    if (curLetterGuessButtonRectangleMaterialName != "Green (Instance)") {
+                                        GameObject.Find("LetterButtonRectangle(" + curLetterGuess + ")").GetComponent<LineRenderer>().material = yellow;
+                                    }
                                 } else {
                                     GameObject.Find("SquareOutline(" + curRow.ToString() + ", " + i.ToString() + ")").GetComponent<LineRenderer>().material = darkGray;
                                     GameObject.Find("SquareInside(" + curRow.ToString() + ", " + i.ToString() + ")").GetComponent<LineRenderer>().material = darkGray;
-                                    GameObject.Find("LetterButtonRectangle(" + submissionAttempt[i] + ")").GetComponent<LineRenderer>().material = darkGray;
+                                    if (curLetterGuessButtonRectangleMaterialName != "Green (Instance)" && curLetterGuessButtonRectangleMaterialName != "Yellow (Instance)") {
+                                        GameObject.Find("LetterButtonRectangle(" + curLetterGuess + ")").GetComponent<LineRenderer>().material = darkGray;
+                                    }
+                                    
                                 }
                             }
                         }
                         if (curRow == numRows - 1) {
-                            if (isAnswerRevealed() == false) {
+                            if (!isAnswerRevealed()) {
                                 GameObject.Find("message_box").GetComponent<LineRenderer>().startWidth = 365 + 28*numCols;
                                 GameObject.Find("message").GetComponent<TextMeshProUGUI>().text = "The answer was '" + curAnswer + "'";
                                 GameObject.Find("message_box").GetComponent<LineRenderer>().enabled = true;
@@ -345,12 +346,12 @@ public class Scene1 : MonoBehaviour {
 
     void viewAnswerButtonClicked() {
         if (!gameOver) {
-            EventSystem.current.SetSelectedGameObject(GameObject.Find("UnfocusButton"));
             GameObject.Find("message_box").GetComponent<LineRenderer>().startWidth = 325 + 28*numCols;
             GameObject.Find("message").GetComponent<TextMeshProUGUI>().text = "The answer is '" + curAnswer + "'";
             GameObject.Find("message_box").GetComponent<LineRenderer>().enabled = true;
             GameObject.Find("message").GetComponent<TextMeshProUGUI>().enabled = true;
         }
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     bool isWrongLength(string word) {
@@ -358,13 +359,13 @@ public class Scene1 : MonoBehaviour {
     }
 
     void restartButtonClicked() {
-        EventSystem.current.SetSelectedGameObject(GameObject.Find("UnfocusButton"));
         SceneManager.LoadScene(1);
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     void gbtmmButtonClicked() {
-        EventSystem.current.SetSelectedGameObject(GameObject.Find("UnfocusButton"));
         SceneManager.LoadScene(0);
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     bool isAnswerRevealed() {
