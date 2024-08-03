@@ -52,11 +52,9 @@ public class Scene1 : MonoBehaviour {
         viewAnswerButton_text_text.fontStyle = FontStyles.Bold;
         viewAnswerButton_text_text.alignment = TextAlignmentOptions.Center;
         viewAnswerButton_button.onClick.AddListener(viewAnswerButtonClicked);
-
         Outline viewAnswerButtonOutline = viewAnswerButton.AddComponent<Outline>();
         viewAnswerButtonOutline.effectColor = Color.black;
         viewAnswerButtonOutline.effectDistance = new Vector2(10, 10);
-
         // Create 'Restart with new word' button:
         GameObject restartButton = new GameObject("RestartButton");
         restartButton.transform.SetParent(GameObject.Find("Canvas").transform);
@@ -79,11 +77,9 @@ public class Scene1 : MonoBehaviour {
         restartButton_text_text.fontStyle = FontStyles.Bold;
         restartButton_text_text.alignment = TextAlignmentOptions.Center;
         restartButton_button.onClick.AddListener(restartButtonClicked);
-
         Outline restartButtonOutline = restartButton.AddComponent<Outline>();
         restartButtonOutline.effectColor = Color.black;
         restartButtonOutline.effectDistance = new Vector2(10, 10);
-
         // Create 'Go back to main menu' button:
         GameObject gbtmmButton = new GameObject("gbtmmButton");
         gbtmmButton.transform.SetParent(GameObject.Find("Canvas").transform);
@@ -106,11 +102,9 @@ public class Scene1 : MonoBehaviour {
         gbtmmButton_text_text.fontStyle = FontStyles.Bold;
         gbtmmButton_text_text.alignment = TextAlignmentOptions.Center;
         gbtmmButton_button.onClick.AddListener(gbtmmButtonClicked);
-
         Outline gbtmmButtonOutline = gbtmmButton.AddComponent<Outline>();
         gbtmmButtonOutline.effectColor = Color.black;
         gbtmmButtonOutline.effectDistance = new Vector2(10, 10);
-
         //
         gameOver = false;
         words = new HashSet<string>(dictionary.text.Split("\n"));
