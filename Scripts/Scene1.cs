@@ -34,8 +34,8 @@ public class Scene1 : MonoBehaviour {
         GameObject viewAnswerButton = new GameObject("viewAnswerButton");
         viewAnswerButton.transform.SetParent(GameObject.Find("Canvas").transform);
         RectTransform rectTransform_viewAnswerButton = viewAnswerButton.AddComponent<RectTransform>();
-        rectTransform_viewAnswerButton.anchoredPosition = new Vector2(1107.5f, -582);
-        rectTransform_viewAnswerButton.sizeDelta = new Vector2(325, 75);
+        rectTransform_viewAnswerButton.anchoredPosition = new Vector2(1104, -577.6f);
+        rectTransform_viewAnswerButton.sizeDelta = new Vector2(315, 60);
         Button viewAnswerButton_button = viewAnswerButton.AddComponent<Button>();
         Image viewAnswerButton_image = viewAnswerButton.AddComponent<Image>();
         viewAnswerButton_image.color = lightGray_;
@@ -45,19 +45,24 @@ public class Scene1 : MonoBehaviour {
         TextMeshProUGUI viewAnswerButton_text_text = viewAnswerButton_text.AddComponent<TextMeshProUGUI>();
         RectTransform rectTransform_viewAnswerButton_text_text = viewAnswerButton_text_text.GetComponent<RectTransform>();
         rectTransform_viewAnswerButton_text_text.anchoredPosition = new Vector2(0, 0);
-        rectTransform_viewAnswerButton_text_text.sizeDelta = new Vector2(300, 75);
+        rectTransform_viewAnswerButton_text_text.sizeDelta = new Vector2(315, 60);
         viewAnswerButton_text_text.text = "View answer";
         viewAnswerButton_text_text.color = Color.black;
         viewAnswerButton_text_text.fontSize = 45;
         viewAnswerButton_text_text.fontStyle = FontStyles.Bold;
         viewAnswerButton_text_text.alignment = TextAlignmentOptions.Center;
         viewAnswerButton_button.onClick.AddListener(viewAnswerButtonClicked);
+
+        Outline viewAnswerButtonOutline = viewAnswerButton.AddComponent<Outline>();
+        viewAnswerButtonOutline.effectColor = Color.black;
+        viewAnswerButtonOutline.effectDistance = new Vector2(10, 10);
+
         // Create 'Restart with new word' button:
         GameObject restartButton = new GameObject("RestartButton");
         restartButton.transform.SetParent(GameObject.Find("Canvas").transform);
         RectTransform rectTransform_restartButton = restartButton.AddComponent<RectTransform>();
-        rectTransform_restartButton.anchoredPosition = new Vector2(995, -666);
-        rectTransform_restartButton.sizeDelta = new Vector2(550, 75);
+        rectTransform_restartButton.anchoredPosition = new Vector2(996.6f, -664.5f);
+        rectTransform_restartButton.sizeDelta = new Vector2(530, 60);
         Button restartButton_button = restartButton.AddComponent<Button>();
         Image restartButton_image = restartButton.AddComponent<Image>();
         restartButton_image.color = lightGray_;
@@ -67,19 +72,24 @@ public class Scene1 : MonoBehaviour {
         TextMeshProUGUI restartButton_text_text = restartButton_text.AddComponent<TextMeshProUGUI>();
         RectTransform rectTransform_restartButton_text_text = restartButton_text_text.GetComponent<RectTransform>();
         rectTransform_restartButton_text_text.anchoredPosition = new Vector2(0, 0);
-        rectTransform_restartButton_text_text.sizeDelta = new Vector2(550, 75);
+        rectTransform_restartButton_text_text.sizeDelta = new Vector2(530, 60);
         restartButton_text_text.text = "Restart with new word";
         restartButton_text_text.color = Color.black;
         restartButton_text_text.fontSize = 45;
         restartButton_text_text.fontStyle = FontStyles.Bold;
         restartButton_text_text.alignment = TextAlignmentOptions.Center;
         restartButton_button.onClick.AddListener(restartButtonClicked);
+
+        Outline restartButtonOutline = restartButton.AddComponent<Outline>();
+        restartButtonOutline.effectColor = Color.black;
+        restartButtonOutline.effectDistance = new Vector2(10, 10);
+
         // Create 'Go back to main menu' button:
         GameObject gbtmmButton = new GameObject("gbtmmButton");
         gbtmmButton.transform.SetParent(GameObject.Find("Canvas").transform);
         RectTransform rectTransform_gbtmmButton = gbtmmButton.AddComponent<RectTransform>();
-        rectTransform_gbtmmButton.anchoredPosition = new Vector2(990, -750);
-        rectTransform_gbtmmButton.sizeDelta = new Vector2(560, 75);
+        rectTransform_gbtmmButton.anchoredPosition = new Vector2(994.2f, -752);
+        rectTransform_gbtmmButton.sizeDelta = new Vector2(535, 60);
         Button gbtmmButton_button = gbtmmButton.AddComponent<Button>();
         Image gbtmmButton_image = gbtmmButton.AddComponent<Image>();
         gbtmmButton_image.color = lightGray_;
@@ -89,13 +99,18 @@ public class Scene1 : MonoBehaviour {
         TextMeshProUGUI gbtmmButton_text_text = gbtmmButton_text.AddComponent<TextMeshProUGUI>();
         RectTransform rectTransform_gbtmmButton_text_text = gbtmmButton_text_text.GetComponent<RectTransform>();
         rectTransform_gbtmmButton_text_text.anchoredPosition = new Vector2(0, 0);
-        rectTransform_gbtmmButton_text_text.sizeDelta = new Vector2(560, 75);
+        rectTransform_gbtmmButton_text_text.sizeDelta = new Vector2(535, 60);
         gbtmmButton_text_text.text = "Go back to main menu";
         gbtmmButton_text_text.color = Color.black;
         gbtmmButton_text_text.fontSize = 45;
         gbtmmButton_text_text.fontStyle = FontStyles.Bold;
         gbtmmButton_text_text.alignment = TextAlignmentOptions.Center;
         gbtmmButton_button.onClick.AddListener(gbtmmButtonClicked);
+
+        Outline gbtmmButtonOutline = gbtmmButton.AddComponent<Outline>();
+        gbtmmButtonOutline.effectColor = Color.black;
+        gbtmmButtonOutline.effectDistance = new Vector2(10, 10);
+
         //
         gameOver = false;
         words = new HashSet<string>(dictionary.text.Split("\n"));
@@ -121,6 +136,7 @@ public class Scene1 : MonoBehaviour {
         message_text.text = "";
         message_text.color = Color.black;
         message_text.fontSize = 40;
+        message_text.fontStyle = FontStyles.Bold;
         message_text.alignment = TextAlignmentOptions.Center;
         message_text.enabled = false;
         GameObject messageBox = new GameObject("message_box");
@@ -268,7 +284,7 @@ public class Scene1 : MonoBehaviour {
                     }
                     if (submissionAttempt == curAnswer) {
                         if (!isAnswerRevealed()) {
-                            GameObject.Find("message_box").GetComponent<LineRenderer>().startWidth = 165;
+                            GameObject.Find("message_box").GetComponent<LineRenderer>().startWidth = 188;
                             GameObject.Find("message").GetComponent<TextMeshProUGUI>().text = "Great!";
                             GameObject.Find("message_box").GetComponent<LineRenderer>().enabled = true;
                             GameObject.Find("message").GetComponent<TextMeshProUGUI>().enabled = true;
@@ -298,7 +314,7 @@ public class Scene1 : MonoBehaviour {
                         }
                         if (curRow == numRows - 1) {
                             if (!isAnswerRevealed()) {
-                                GameObject.Find("message_box").GetComponent<LineRenderer>().startWidth = 365 + 28*numCols;
+                                GameObject.Find("message_box").GetComponent<LineRenderer>().startWidth = 416 + 32*numCols;
                                 GameObject.Find("message").GetComponent<TextMeshProUGUI>().text = "The answer was '" + curAnswer + "'";
                                 GameObject.Find("message_box").GetComponent<LineRenderer>().enabled = true;
                                 GameObject.Find("message").GetComponent<TextMeshProUGUI>().enabled = true;
@@ -316,10 +332,10 @@ public class Scene1 : MonoBehaviour {
                         Invoke("removeMessage", 1);
                     }
                     if (submissionAttempt[numCols - 1] == 'S') {
-                        GameObject.Find("message_box").GetComponent<LineRenderer>().startWidth = 500;
+                        GameObject.Find("message_box").GetComponent<LineRenderer>().startWidth = 570;
                         GameObject.Find("message").GetComponent<TextMeshProUGUI>().text = "Word cannot end with 'S'";
                     } else {
-                        GameObject.Find("message_box").GetComponent<LineRenderer>().startWidth = 260;
+                        GameObject.Find("message_box").GetComponent<LineRenderer>().startWidth = 296;
                         GameObject.Find("message").GetComponent<TextMeshProUGUI>().text = "Invalid word";
                     }
                     GameObject.Find("message_box").GetComponent<LineRenderer>().enabled = true;
@@ -331,7 +347,7 @@ public class Scene1 : MonoBehaviour {
                 } else {
                     Invoke("removeMessage", 1);
                 }
-                GameObject.Find("message_box").GetComponent<LineRenderer>().startWidth = 340;
+                GameObject.Find("message_box").GetComponent<LineRenderer>().startWidth = 388;
                 GameObject.Find("message").GetComponent<TextMeshProUGUI>().text = "Incomplete word";
                 GameObject.Find("message_box").GetComponent<LineRenderer>().enabled = true;
                 GameObject.Find("message").GetComponent<TextMeshProUGUI>().enabled = true;
@@ -346,7 +362,7 @@ public class Scene1 : MonoBehaviour {
 
     void viewAnswerButtonClicked() {
         if (!gameOver) {
-            GameObject.Find("message_box").GetComponent<LineRenderer>().startWidth = 325 + 28*numCols;
+            GameObject.Find("message_box").GetComponent<LineRenderer>().startWidth = 371 + 32*numCols;
             GameObject.Find("message").GetComponent<TextMeshProUGUI>().text = "The answer is '" + curAnswer + "'";
             GameObject.Find("message_box").GetComponent<LineRenderer>().enabled = true;
             GameObject.Find("message").GetComponent<TextMeshProUGUI>().enabled = true;
